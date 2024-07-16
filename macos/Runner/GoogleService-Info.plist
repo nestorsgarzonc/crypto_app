@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>658102564288-q6oi4s9ouej4ovrkhakqv98i2c61pgdm.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.658102564288-q6oi4s9ouej4ovrkhakqv98i2c61pgdm</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD1zdPSpM9tnBvTNprAPdvzGbOB7IiMXp0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>658102564288</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.nestorsgarzonc.cryptoApp</string>
+	<key>PROJECT_ID</key>
+	<string>unlearn-148a3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>unlearn-148a3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:658102564288:ios:93adce48a882c8ab614425</string>
+	<key>DATABASE_URL</key>
+	<string>https://unlearn-148a3.firebaseio.com</string>
+</dict>
+</plist>

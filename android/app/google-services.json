@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "658102564288",
+    "firebase_url": "https://unlearn-148a3.firebaseio.com",
+    "project_id": "unlearn-148a3",
+    "storage_bucket": "unlearn-148a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658102564288:android:2e230535255af94f614425",
+        "android_client_info": {
+          "package_name": "com.example.voice_calls_twilio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658102564288-find26jpvgjm4sd6lkbl4hrapaddup26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgZrQnRX9RIlF3w7mjfJSwNasiIrDRvls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658102564288-find26jpvgjm4sd6lkbl4hrapaddup26.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "658102564288-8jd7fju41m78s913e87pgnsofklv51r1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.es"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658102564288:android:4a21a3f2708b0496614425",
+        "android_client_info": {
+          "package_name": "com.nestorsgarzonc.crypto_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658102564288-find26jpvgjm4sd6lkbl4hrapaddup26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgZrQnRX9RIlF3w7mjfJSwNasiIrDRvls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658102564288-find26jpvgjm4sd6lkbl4hrapaddup26.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "658102564288-8jd7fju41m78s913e87pgnsofklv51r1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.es"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658102564288:android:5f04d670a21a62fa614425",
+        "android_client_info": {
+          "package_name": "com.nw.waffly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658102564288-find26jpvgjm4sd6lkbl4hrapaddup26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgZrQnRX9RIlF3w7mjfJSwNasiIrDRvls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658102564288-find26jpvgjm4sd6lkbl4hrapaddup26.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "658102564288-8jd7fju41m78s913e87pgnsofklv51r1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.es"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
