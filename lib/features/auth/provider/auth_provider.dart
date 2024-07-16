@@ -6,12 +6,12 @@ import 'package:crypto_app/features/auth/provider/auth_state.dart';
 import 'package:crypto_app/features/auth/service/auth_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final authProvider = StateNotifierProvider<AuthProvider, AuthState>(AuthProvider.fromRef);
+final authProvider = StateNotifierProvider<AuthNotifier, AuthState>(AuthNotifier.fromRef);
 
-class AuthProvider extends StateNotifier<AuthState> {
-  AuthProvider({required this.ref, required this.service}) : super(AuthState.initial());
+class AuthNotifier extends StateNotifier<AuthState> {
+  AuthNotifier({required this.ref, required this.service}) : super(AuthState.initial());
 
-  factory AuthProvider.fromRef(Ref ref) => AuthProvider(
+  factory AuthNotifier.fromRef(Ref ref) => AuthNotifier(
         ref: ref,
         service: ref.read(authService),
       );
@@ -22,7 +22,7 @@ class AuthProvider extends StateNotifier<AuthState> {
   final AuthService service;
 
   void login() {
-    service.checkAuthStatus();
+    service.getAuth();
   }
 
   Future<void> register(RegisterModel register) async {
@@ -44,7 +44,7 @@ class AuthProvider extends StateNotifier<AuthState> {
 
   Future<void> checkAuth() async {
     try {
-      final user = await service.checkAuthStatus();
+      final user = await service.getAuth();
       state = state.copyWith(userAuth: StateAsync.data(user));
     } catch (e) {
       state = state.copyWith(userAuth: StateAsync.failure(Failure(e.toString())));

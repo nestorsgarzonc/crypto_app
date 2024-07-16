@@ -5,6 +5,7 @@ import 'package:crypto_app/core/sealed/state_async.dart';
 import 'package:crypto_app/core/validators/text_validators.dart';
 import 'package:crypto_app/features/auth/models/register_model.dart';
 import 'package:crypto_app/features/auth/provider/auth_provider.dart';
+import 'package:crypto_app/ui/padding.dart';
 import 'package:crypto_app/ui/snackbars.dart';
 import 'package:crypto_app/ui/spacings.dart';
 import 'package:flutter/material.dart';
@@ -72,11 +73,7 @@ class _ProfileTabState extends ConsumerState<ProfileTab> {
         return Form(
           key: _formKey,
           child: ListView(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + 16,
-              left: 16,
-              right: 16,
-            ),
+            padding: Paddings.bodySafePadding(context),
             children: [
               Text('Profile', style: theme.textTheme.titleLarge),
               const Text('You can edit your profile here.'),

@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final authService = Provider<AuthService>(AuthServiceImpl.fromRef);
 
 abstract class AuthService {
-  Future<User?> checkAuthStatus();
+  Future<User?> getAuth();
   Stream<User?> authStateChanges();
   Future<void> register(RegisterModel model);
   Future<void> updateUser(UpdateUser user);
@@ -19,23 +19,21 @@ abstract class AuthService {
 }
 
 class AuthServiceImpl implements AuthService {
-  const AuthServiceImpl({required this.firestore, required this.ref, required this.auth});
+  const AuthServiceImpl({required this.userRef, required this.auth});
   static const logger = Logger(name: 'AuthService');
 
   factory AuthServiceImpl.fromRef(Ref ref) {
     return AuthServiceImpl(
-      ref: ref,
       auth: ref.read(firebaseAuthProvider),
-      firestore: ref.read(firestoreProvider),
+      userRef: ref.read(userRefFirestore),
     );
   }
 
-  final Ref ref;
   final FirebaseAuth auth;
-  final FirebaseFirestore firestore;
+  final DocumentReference<UserModel> userRef;
 
   @override
-  Future<User?> checkAuthStatus() async => auth.currentUser;
+  Future<User?> getAuth() async => auth.currentUser;
 
   @override
   Stream<User?> authStateChanges() => auth.authStateChanges();
@@ -47,10 +45,7 @@ class AuthServiceImpl implements AuthService {
       final authRes = await _createUserFirebase(model);
       logger.info('User using firebase: $authRes');
       // Add user to firestore
-      await firestore.collection('users').doc(authRes.user?.uid).set({
-        ...model.toMap(),
-        'createdAt': FieldValue.serverTimestamp(),
-      });
+      await userRef.set(model);
       logger.info('User registered: ${authRes.user?.email}');
     } catch (e, s) {
       logger.error('Error registering user', e, s);
@@ -86,9 +81,8 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<UserModel> getUser() async {
     try {
-      final userId = auth.currentUser?.uid;
-      final user = await firestore.collection('users').doc(userId).get();
-      return UserModel.fromMap(user.data()!);
+      final user = await userRef.get();
+      return user.data()!;
     } catch (e, s) {
       logger.error('Error getting user', e, s);
       throw const Failure('An error occurred while getting user');
@@ -98,11 +92,8 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<void> updateUser(UpdateUser user) async {
     try {
-      final userId = auth.currentUser?.uid;
-      if (user.password != null) {
-        await auth.currentUser?.updatePassword(user.password!);
-      }
-      await firestore.collection('users').doc(userId).update(user.toMap());
+      if (user.password != null) await auth.currentUser?.updatePassword(user.password!);
+      await userRef.update(user.toMap());
     } catch (e, s) {
       logger.error('Error updating user', e, s);
       throw const Failure('An error occurred while updating user');

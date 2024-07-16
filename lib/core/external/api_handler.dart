@@ -25,6 +25,7 @@ final class ApiHandlerImpl implements ApiHandler {
   static const _headers = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'x-cg-demo-api-key': ApiConstants.apiKey,
   };
 
   @override
