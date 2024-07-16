@@ -146,3 +146,45 @@ class RegisterModel extends UserModel {
     );
   }
 }
+
+class UpdateUser extends UserModel {
+  UpdateUser({
+    required super.email,
+    required super.name,
+    required super.id,
+    required super.birthday,
+    required this.password,
+  });
+
+  factory UpdateUser.fromUserModel(UserModel user, String? password) {
+    return UpdateUser(
+      email: user.email,
+      name: user.name,
+      id: user.id,
+      birthday: user.birthday,
+      password: password,
+    );
+  }
+
+  final String? password;
+
+  @override
+  bool operator ==(covariant UpdateUser other) {
+    if (identical(this, other)) return true;
+    return other.email == email &&
+        other.name == name &&
+        other.id == id &&
+        other.birthday == birthday &&
+        other.password == password;
+  }
+
+  @override
+  int get hashCode {
+    return email.hashCode ^ name.hashCode ^ id.hashCode ^ birthday.hashCode ^ password.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'UpdateUser(email: $email, name: $name, id: $id, birthday: $birthday, password: $password)';
+  }
+}

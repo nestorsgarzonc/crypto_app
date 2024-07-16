@@ -1,5 +1,6 @@
 import 'package:crypto_app/core/failure/failure.dart';
 import 'package:crypto_app/core/logger/custom_logger.dart';
+import 'package:crypto_app/core/sealed/state_async.dart';
 import 'package:crypto_app/features/auth/models/register_model.dart';
 import 'package:crypto_app/features/auth/provider/auth_state.dart';
 import 'package:crypto_app/features/auth/service/auth_service.dart';
@@ -26,25 +27,47 @@ class AuthProvider extends StateNotifier<AuthState> {
 
   Future<void> register(RegisterModel register) async {
     try {
-      state = state.copyWith(registerState: const RegisterStateLoading());
+      state = state.copyWith(registerState: const StateAsync.initial());
       await service.register(register);
-      state = state.copyWith(registerState: RegisterStateSuccess());
+      state = state.copyWith(registerState: const StateAsync.data(null));
     } catch (e, s) {
       logger.error('Error registering user', e, s);
-      state = state.copyWith(registerState: RegisterStateFailure(Failure(e.toString())));
+      state = state.copyWith(registerState: StateAsync.failure(Failure(e.toString())));
     }
   }
 
   void listenAuth() {
-    service.authStateChanges().listen((user) => state = state.copyWith(user: AsyncData(user)));
+    service
+        .authStateChanges()
+        .listen((user) => state = state.copyWith(userAuth: StateAsync.data(user)));
   }
 
   Future<void> checkAuth() async {
     try {
       final user = await service.checkAuthStatus();
-      state = state.copyWith(user: AsyncData(user));
-    } catch (e, s) {
-      state = state.copyWith(user: AsyncError(e, s));
+      state = state.copyWith(userAuth: StateAsync.data(user));
+    } catch (e) {
+      state = state.copyWith(userAuth: StateAsync.failure(Failure(e.toString())));
+    }
+  }
+
+  Future<void> getUser() async {
+    try {
+      final user = await service.getUser();
+      state = state.copyWith(userModel: StateAsync.data(user));
+    } catch (e) {
+      state = state.copyWith(userModel: StateAsync.failure(Failure(e.toString())));
+    }
+  }
+
+  Future<void> updateUser(UpdateUser user) async {
+    try {
+      state = state.copyWith(updateUser: const StateAsync.loading());
+      await service.updateUser(user);
+      await getUser();
+      state = state.copyWith(updateUser: const StateAsync.data(null));
+    } catch (e) {
+      state = state.copyWith(updateUser: StateAsync.failure(Failure(e.toString())));
     }
   }
 }

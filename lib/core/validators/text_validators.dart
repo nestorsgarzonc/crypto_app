@@ -14,12 +14,24 @@ abstract interface class TextValidators {
     return null;
   }
 
-  static String? password(String? value) {
-    if (value == null || value.isEmpty) {
+  static String? password(String? value, {bool optional = false}) {
+    final isEmptyOrNull = value == null || value.isEmpty;
+    if (isEmptyOrNull && !optional) {
       return 'Password is required';
     }
-    if (value.length < 8) {
+    if ((value?.length ?? 0) < 8 && !isEmptyOrNull) {
       return 'Password must be at least 8 characters';
+    }
+    return null;
+  }
+
+  static String? confirmPassword(String? value, String? password, {bool optional = false}) {
+    final isEmptyOrNull = value == null || value.isEmpty || password == null || password.isEmpty;
+    if (isEmptyOrNull && !optional) {
+      return 'Confirm password is required';
+    }
+    if (value != password) {
+      return 'Passwords do not match';
     }
     return null;
   }
@@ -40,16 +52,6 @@ abstract interface class TextValidators {
     }
     if (!phoneValidator.hasMatch(value)) {
       return 'Enter a valid phone number';
-    }
-    return null;
-  }
-
-  static String? confirmPassword(String? value, String? password) {
-    if (value == null || value.isEmpty) {
-      return 'Confirm password is required';
-    }
-    if (value != password) {
-      return 'Passwords do not match';
     }
     return null;
   }

@@ -1,4 +1,5 @@
 import 'package:crypto_app/features/auth/ui/routes.dart';
+import 'package:crypto_app/features/dashboard/ui/routes.dart';
 import 'package:crypto_app/features/splash/ui/routes.dart';
 import 'package:crypto_app/features/splash/ui/screens/splash_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +21,7 @@ abstract interface class _AppRouter {
   static final routes = <RouteBase>[
     ...SplashRoutes.routes,
     ...AuthRoutes.routes,
+    ...DashboardRoutes.routes,
   ];
 
   static isPublicRoute(String route) => publicRoutes.contains(route);

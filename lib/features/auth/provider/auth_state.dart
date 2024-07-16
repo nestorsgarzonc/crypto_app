@@ -1,69 +1,59 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:crypto_app/core/failure/failure.dart';
+import 'package:crypto_app/core/sealed/state_async.dart';
+import 'package:crypto_app/features/auth/models/register_model.dart';
 
 class AuthState {
   const AuthState({
-    required this.user,
+    required this.userAuth,
     required this.registerState,
+    required this.userModel,
+    required this.updateUser,
   });
 
-  final AsyncValue<User?> user;
-  final RegisterState registerState;
+  final StateAsync<User?> userAuth;
+  final StateAsync<UserModel> userModel;
+  final StateAsync<void> registerState;
+  final StateAsync<void> updateUser;
 
   factory AuthState.initial() {
     return const AuthState(
-      user: AsyncValue.loading(),
-      registerState: RegisterStateInitial(),
+      userAuth: StateAsync.initial(),
+      userModel: StateAsync.initial(),
+      registerState: StateAsync.initial(),
+      updateUser: StateAsync.initial(),
     );
   }
 
   AuthState copyWith({
-    AsyncValue<User?>? user,
-    RegisterState? registerState,
+    StateAsync<User?>? userAuth,
+    StateAsync<UserModel>? userModel,
+    StateAsync? registerState,
+    StateAsync? updateUser,
   }) {
     return AuthState(
-      user: user ?? this.user,
+      userAuth: userAuth ?? this.userAuth,
+      userModel: userModel ?? this.userModel,
       registerState: registerState ?? this.registerState,
+      updateUser: updateUser ?? this.updateUser,
     );
   }
 
   @override
   bool operator ==(covariant AuthState other) {
     if (identical(this, other)) return true;
-
-    return other.user == user && other.registerState == registerState;
+  
+    return 
+      other.userAuth == userAuth &&
+      other.userModel == userModel &&
+      other.registerState == registerState &&
+      other.updateUser == updateUser;
   }
 
   @override
-  int get hashCode => user.hashCode ^ registerState.hashCode;
-}
-
-sealed class RegisterState {
-  const RegisterState();
-}
-
-class RegisterStateInitial extends RegisterState {
-  const RegisterStateInitial();
-}
-
-class RegisterStateLoading extends RegisterState {
-  const RegisterStateLoading();
-}
-
-class RegisterStateFailure extends RegisterState {
-  const RegisterStateFailure(this.failure);
-
-  final Failure failure;
-
-  @override
-  bool operator ==(covariant RegisterStateFailure other) {
-    if (identical(this, other)) return true;
-    return other.failure == failure;
+  int get hashCode {
+    return userAuth.hashCode ^
+      userModel.hashCode ^
+      registerState.hashCode ^
+      updateUser.hashCode;
   }
-
-  @override
-  int get hashCode => failure.hashCode;
 }
-
-class RegisterStateSuccess extends RegisterState {}

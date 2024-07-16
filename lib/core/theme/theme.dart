@@ -10,6 +10,12 @@ abstract interface class MyTheme {
       titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
       iconTheme: IconThemeData(color: Colors.white),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(primaryColor),
+        textStyle: WidgetStateProperty.all(const TextStyle(color: Colors.white)),
+      ),
+    ),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: primaryColor[50],
       errorBorder: const OutlineInputBorder(

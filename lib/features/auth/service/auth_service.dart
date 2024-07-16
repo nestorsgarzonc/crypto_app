@@ -14,6 +14,8 @@ abstract class AuthService {
   Future<User?> checkAuthStatus();
   Stream<User?> authStateChanges();
   Future<void> register(RegisterModel model);
+  Future<void> updateUser(UpdateUser user);
+  Future<UserModel> getUser();
 }
 
 class AuthServiceImpl implements AuthService {
@@ -78,6 +80,32 @@ class AuthServiceImpl implements AuthService {
         message = 'An error occurred while registering';
       }
       throw Failure(message);
+    }
+  }
+
+  @override
+  Future<UserModel> getUser() async {
+    try {
+      final userId = auth.currentUser?.uid;
+      final user = await firestore.collection('users').doc(userId).get();
+      return UserModel.fromMap(user.data()!);
+    } catch (e, s) {
+      logger.error('Error getting user', e, s);
+      throw const Failure('An error occurred while getting user');
+    }
+  }
+
+  @override
+  Future<void> updateUser(UpdateUser user) async {
+    try {
+      final userId = auth.currentUser?.uid;
+      if (user.password != null) {
+        await auth.currentUser?.updatePassword(user.password!);
+      }
+      await firestore.collection('users').doc(userId).update(user.toMap());
+    } catch (e, s) {
+      logger.error('Error updating user', e, s);
+      throw const Failure('An error occurred while updating user');
     }
   }
 }
