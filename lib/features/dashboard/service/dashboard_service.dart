@@ -9,7 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final dashboardService = Provider<DashboardService>((ref) => DashboardServiceImpl.fromRef(ref));
 
 abstract class DashboardService {
-  Future<List<CoinsModel>> getCoins({CoinsOrder order = CoinsOrder.descendent, int page = 1});
+  Future<List<CoinsModel>> getCoins(
+      {CoinsOrder order = CoinsOrder.descendent, int page = 1, List<String>? query});
   Future<Set<String>> getFavoritesCoins();
   Future<void> addFavoriteCoin(String coinId);
   Future<void> deleteFavoriteCoin(String coinId);
@@ -31,9 +32,13 @@ class DashboardServiceImpl implements DashboardService {
 
   @override
   Future<List<CoinsModel>> getCoins(
-      {CoinsOrder order = CoinsOrder.descendent, int page = 1}) async {
+      {CoinsOrder order = CoinsOrder.descendent, int page = 1, List<String>? query}) async {
+    String queryStr = '';
+    if (query != null && query.isNotEmpty) {
+      queryStr = '&ids=${query.join(',')}';
+    }
     final path =
-        '/v3/coins/markets?vs_currency=usd&order=${order.labelBackEnd}&per_page=20&page=$page';
+        '/v3/coins/markets?vs_currency=usd&order=${order.labelBackEnd}&per_page=20&page=$page$queryStr';
     final res = await apiHandler.get(path);
     _logger.info('getCoins: $res');
     return res.responseList.map((e) => CoinsModel.fromMap(e)).toList();

@@ -77,7 +77,7 @@ class _ProfileTabState extends ConsumerState<ProfileTab> {
             children: [
               Text('Profile', style: theme.textTheme.titleLarge),
               const Text('You can edit your profile here.'),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _passwordController,
@@ -88,7 +88,7 @@ class _ProfileTabState extends ConsumerState<ProfileTab> {
                 validator: (v) => TextValidators.password(v, optional: true),
                 decoration: const InputDecoration(labelText: 'Password'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _confirmPasswordController,
@@ -100,7 +100,7 @@ class _ProfileTabState extends ConsumerState<ProfileTab> {
                     TextValidators.confirmPassword(value, _passwordController.text, optional: true),
                 decoration: const InputDecoration(labelText: 'Confirm Password'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _nameController,
@@ -111,7 +111,7 @@ class _ProfileTabState extends ConsumerState<ProfileTab> {
                 validator: TextValidators.name,
                 decoration: const InputDecoration(labelText: 'Name'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _idController,
@@ -121,7 +121,7 @@ class _ProfileTabState extends ConsumerState<ProfileTab> {
                 validator: TextValidators.number,
                 decoration: const InputDecoration(labelText: 'ID Number'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _birthdayController,
@@ -132,7 +132,7 @@ class _ProfileTabState extends ConsumerState<ProfileTab> {
                 validator: (_) => _isLessThan18 ? 'You must be 18 years old' : null,
                 decoration: const InputDecoration(labelText: 'Birthday'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               ElevatedButton(
                 onPressed: updateUserLoading ? null : () => _onUpdate(user),
                 child: updateUserLoading

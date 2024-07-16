@@ -13,6 +13,9 @@ class DashboardState {
   final Set<String> favoriteCoins;
   final CoinsOrder order;
 
+  List<CoinsModel> get favoriteCoinsList =>
+      coins.value?.where((e) => favoriteCoins.contains(e.id)).toList() ?? [];
+
   factory DashboardState.initial() {
     return const DashboardState(
       coins: StateAsync.initial(),

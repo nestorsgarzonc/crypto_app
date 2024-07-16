@@ -66,7 +66,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Complete the form below to register', style: theme.titleMedium),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _emailController,
@@ -77,7 +77,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 validator: TextValidators.email,
                 decoration: const InputDecoration(labelText: 'Email'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _passwordController,
@@ -88,7 +88,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 validator: TextValidators.password,
                 decoration: const InputDecoration(labelText: 'Password'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _confirmPasswordController,
@@ -100,7 +100,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     TextValidators.confirmPassword(value, _passwordController.text),
                 decoration: const InputDecoration(labelText: 'Confirm Password'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _nameController,
@@ -111,7 +111,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 validator: TextValidators.name,
                 decoration: const InputDecoration(labelText: 'Name'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _idController,
@@ -121,7 +121,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 validator: TextValidators.number,
                 decoration: const InputDecoration(labelText: 'ID Number'),
               ),
-              Spacings.h16,
+              Spacings.v16,
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _birthdayController,

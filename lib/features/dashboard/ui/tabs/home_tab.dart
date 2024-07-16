@@ -1,7 +1,7 @@
 import 'package:crypto_app/core/sealed/state_async.dart';
 import 'package:crypto_app/features/dashboard/models/coins_order.dart';
 import 'package:crypto_app/features/dashboard/provider/dashboard_provider.dart';
-import 'package:crypto_app/ui/padding.dart';
+import 'package:crypto_app/features/dashboard/ui/widgets/crypto_favorite_card.dart';
 import 'package:crypto_app/ui/spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +32,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
     return Column(
       children: [
         SafeArea(child: Text('Welcome to Crypto App!', style: theme.textTheme.titleLarge)),
-        Spacings.h16,
+        Spacings.v16,
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Form(
@@ -44,9 +44,8 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                     controller: _searchController,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.search,
-                    onFieldSubmitted: (value) {
-                      print('aaa');
-                    },
+                    onFieldSubmitted: (value) =>
+                        ref.read(dashboardProvider.notifier).fetchCryptos(query: [value]),
                     decoration:
                         const InputDecoration(hintText: 'Search', prefixIcon: Icon(Icons.search)),
                   ),
@@ -59,7 +58,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
             ),
           ),
         ),
-        Spacings.h16,
+        Spacings.v16,
         dashboardState.coins.when(
           loading: () => const Center(child: CircularProgressIndicator.adaptive()),
           error: (error) => Text(error.toString()),
@@ -71,26 +70,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
               itemBuilder: (context, index) {
                 final coin = data[index];
                 final isFavorite = dashboardState.favoriteCoins.contains(coin.id);
-                return Card(
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.all(8),
-                    title: Text(coin.name),
-                    subtitle: Text(coin.symbol),
-                    trailing: Text(
-                      '\$${coin.currentPrice.toStringAsFixed(1)}',
-                      style: theme.textTheme.labelLarge,
-                    ),
-                    leading: IconButton(
-                      icon: Icon(
-                        Icons.star,
-                        color: isFavorite ? Colors.orangeAccent : null,
-                      ),
-                      onPressed: () => isFavorite
-                          ? ref.read(dashboardProvider.notifier).deleteFavoriteCoin(coin.id)
-                          : ref.read(dashboardProvider.notifier).addFavoriteCoin(coin.id),
-                    ),
-                  ),
-                );
+                return CryptoItemCard(coin: coin, isFavorite: isFavorite);
               },
             ),
           ),

@@ -1,19 +1,27 @@
+import 'package:crypto_app/features/dashboard/provider/dashboard_provider.dart';
 import 'package:crypto_app/features/dashboard/ui/tabs/compare_tab.dart';
 import 'package:crypto_app/features/dashboard/ui/tabs/favorites_tab.dart';
 import 'package:crypto_app/features/dashboard/ui/tabs/home_tab.dart';
 import 'package:crypto_app/features/dashboard/ui/tabs/profile_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
   static const route = '/';
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
-  int _selectedIndex = 0;
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  int _idx = 0;
+  int get _selectedIndex => _idx;
+  set _selectedIndex(int idx) {
+    setState(() => _idx = idx);
+    if (idx == 0) ref.read(dashboardProvider.notifier).fetchCryptos();
+    if (idx == 1) ref.read(dashboardProvider.notifier).fetchFavoritesCryptos();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +32,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
-        onDestinationSelected: (idx) => setState(() => _selectedIndex = idx),
+        onDestinationSelected: (idx) => _selectedIndex = idx,
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
           NavigationDestination(icon: Icon(Icons.favorite), label: 'Favorites'),
