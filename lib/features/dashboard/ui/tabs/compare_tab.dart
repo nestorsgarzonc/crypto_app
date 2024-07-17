@@ -2,7 +2,6 @@ import 'package:crypto_app/core/sealed/state_async.dart';
 import 'package:crypto_app/features/dashboard/provider/dashboard_provider.dart';
 import 'package:crypto_app/features/dashboard/ui/widgets/crypto_compare_widget.dart';
 import 'package:crypto_app/features/dashboard/ui/widgets/side_crypto_detail.dart';
-import 'package:crypto_app/ui/spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

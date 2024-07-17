@@ -8,6 +8,9 @@ class CoinsModel {
   final int marketCapRank;
   final double priceChange24h;
   final double priceChangePercentage24h;
+  final double? variation;
+
+  bool get isPositiveVar => variation != null && variation! >= 0;
 
   const CoinsModel({
     required this.id,
@@ -19,6 +22,7 @@ class CoinsModel {
     required this.marketCapRank,
     required this.priceChange24h,
     required this.priceChangePercentage24h,
+    this.variation,
   });
 
   CoinsModel copyWith({
@@ -31,6 +35,7 @@ class CoinsModel {
     int? marketCapRank,
     double? priceChange24h,
     double? priceChangePercentage24h,
+    double? variation,
   }) {
     return CoinsModel(
       id: id ?? this.id,
@@ -42,6 +47,7 @@ class CoinsModel {
       marketCapRank: marketCapRank ?? this.marketCapRank,
       priceChange24h: priceChange24h ?? this.priceChange24h,
       priceChangePercentage24h: priceChangePercentage24h ?? this.priceChangePercentage24h,
+      variation: variation ?? this.variation,
     );
   }
 
@@ -73,7 +79,7 @@ class CoinsModel {
 
   @override
   String toString() =>
-      'CoinsModel(id: $id, symbol: $symbol, name: $name, image: $image, currentPrice: $currentPrice, marketCap: $marketCap, marketCapRank: $marketCapRank, priceChange24h: $priceChange24h, priceChangePercentage24h: $priceChangePercentage24h)';
+      'CoinsModel(id: $id, symbol: $symbol, name: $name, image: $image, currentPrice: $currentPrice, marketCap: $marketCap, marketCapRank: $marketCapRank, priceChange24h: $priceChange24h, priceChangePercentage24h: $priceChangePercentage24h), variation: $variation';
 
   @override
   bool operator ==(covariant CoinsModel other) {
@@ -86,6 +92,7 @@ class CoinsModel {
         other.marketCap == marketCap &&
         other.marketCapRank == marketCapRank &&
         other.priceChange24h == priceChange24h &&
+        other.variation == variation &&
         other.priceChangePercentage24h == priceChangePercentage24h;
   }
 
@@ -99,5 +106,6 @@ class CoinsModel {
       marketCap.hashCode ^
       marketCapRank.hashCode ^
       priceChange24h.hashCode ^
+      variation.hashCode ^
       priceChangePercentage24h.hashCode;
 }

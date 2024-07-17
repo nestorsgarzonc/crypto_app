@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crypto_app/core/sealed/state_async.dart';
 import 'package:crypto_app/features/dashboard/provider/dashboard_provider.dart';
 import 'package:crypto_app/features/dashboard/ui/widgets/crypto_favorite_card.dart';
@@ -12,11 +14,25 @@ class FavoritesTab extends ConsumerStatefulWidget {
 }
 
 class _FavoritesTabState extends ConsumerState<FavoritesTab> {
+  late Timer timer;
+
   @override
   void initState() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => ref.read(dashboardProvider.notifier).fetchFavoritesCryptos());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(dashboardProvider.notifier).fetchFavoritesCryptos();
+      timer = Timer.periodic(const Duration(seconds: 5), _timerCallback);
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  void _timerCallback(Timer timer) {
+    ref.read(dashboardProvider.notifier).fetchFavoritesCryptos(setLoading: false);
   }
 
   @override

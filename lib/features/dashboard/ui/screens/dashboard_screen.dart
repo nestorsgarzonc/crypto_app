@@ -1,4 +1,3 @@
-import 'package:crypto_app/features/dashboard/provider/dashboard_provider.dart';
 import 'package:crypto_app/features/dashboard/ui/tabs/compare_tab.dart';
 import 'package:crypto_app/features/dashboard/ui/tabs/favorites_tab.dart';
 import 'package:crypto_app/features/dashboard/ui/tabs/home_tab.dart';
