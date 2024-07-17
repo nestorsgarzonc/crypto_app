@@ -5,12 +5,14 @@ import 'package:crypto_app/features/auth/models/register_model.dart';
 import 'package:crypto_app/features/auth/provider/auth_state.dart';
 import 'package:crypto_app/features/auth/service/auth_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+/// Provider for managing authentication state and actions.
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>(AuthNotifier.fromRef);
 
+/// Notifier class for managing authentication state and actions.
 class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier({required this.ref, required this.service}) : super(AuthState.initial());
 
+  /// Factory constructor for creating an [AuthNotifier] instance from a [Ref].
   factory AuthNotifier.fromRef(Ref ref) => AuthNotifier(
         ref: ref,
         service: ref.read(authService),
@@ -21,6 +23,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final Ref ref;
   final AuthService service;
 
+  /// Logs in a user with the provided email and password.
   Future<void> login(String email, String password) async {
     try {
       state = state.copyWith(registerState: const StateAsync.loading());
@@ -32,6 +35,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  /// Registers a new user with the provided registration data.
   Future<void> register(RegisterModel register) async {
     try {
       state = state.copyWith(registerState: const StateAsync.initial());
@@ -43,12 +47,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  /// Listens for changes in the authentication state.
   void listenAuth() {
     service.authStateChanges().listen((user) {
       state = state.copyWith(userAuth: StateAsync.data(user));
     });
   }
 
+  /// Checks the current authentication state and updates the state accordingly.
   Future<void> checkAuth() async {
     try {
       final user = await service.getAuth();
@@ -59,6 +65,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  /// Retrieves the user data.
   Future<void> getUser() async {
     try {
       final user = await service.getUser();
@@ -68,6 +75,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  /// Updates the user data with the provided data.
   Future<void> updateUser(UpdateUser user) async {
     try {
       state = state.copyWith(updateUser: const StateAsync.loading());
@@ -79,5 +87,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  /// Signs out the current user.
   void signOut() => service.signOut();
 }

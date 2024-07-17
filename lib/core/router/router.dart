@@ -10,7 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+/// Provider for the app router.
 final _routerNotifier = NotifierProvider(_AppRouter.new);
+
+/// Provider for the app router instance.
 final routerProvider = Provider(
   (ref) => GoRouter(
     initialLocation: _AppRouter.initial,
@@ -20,19 +23,27 @@ final routerProvider = Provider(
   ),
 );
 
+/// The main app router class that extends [Notifier] and implements [Listenable].
 class _AppRouter extends Notifier implements Listenable {
   static const initial = SplashScreen.route;
+
+  /// Public routes available in the app.
   static const publicRoutes = {
     ...SplashRoutes.publicRoutes,
     ...AuthRoutes.publicRoutes,
   };
+
+  /// All routes available in the app.
   static final routes = <RouteBase>[
     ...SplashRoutes.routes,
     ...AuthRoutes.routes,
     ...DashboardRoutes.routes,
   ];
 
+  /// Checks if a given route is a public route.
   static isPublicRoute(String? route) => publicRoutes.contains(route);
+
+  /// Checks if a given route is a private route.
   static isPrivateRoute(String? route) => !isPublicRoute(route);
 
   VoidCallback? _listener;
@@ -52,6 +63,10 @@ class _AppRouter extends Notifier implements Listenable {
   @override
   void removeListener(VoidCallback listener) => _listener = null;
 
+  /// Redirects to a specific route based on the current state of the app.
+  ///
+  /// If the current route is a private route and the user is not authenticated,
+  /// it redirects to the login screen. Otherwise, it returns null.
   String? redirect(BuildContext context, GoRouterState state) {
     final isAuthRoute = isPrivateRoute(state.fullPath);
     if (isAuthRoute && !isAuthenticated) {

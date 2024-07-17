@@ -1,7 +1,14 @@
 import 'package:crypto_app/ui/spacings.dart';
 import 'package:flutter/material.dart';
 
+/// A widget that allows the user to compare two cryptocurrencies.
 class CryptoCompareWidget extends StatefulWidget {
+  /// Creates a [CryptoCompareWidget].
+  ///
+  /// The [onCompare] callback is called when the user taps the compare button
+  /// and provides a list of two selected cryptocurrencies.
+  ///
+  /// The [coins] set contains the available cryptocurrencies to choose from.
   const CryptoCompareWidget({super.key, required this.onCompare, required this.coins});
 
   final ValueChanged<List<String>> onCompare;

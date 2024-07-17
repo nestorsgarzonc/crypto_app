@@ -2,6 +2,7 @@ import 'package:crypto_app/features/dashboard/models/coins_model.dart';
 import 'package:crypto_app/ui/spacings.dart';
 import 'package:flutter/material.dart';
 
+/// A widget that displays detailed information about a cryptocurrency.
 class SideCryptoDetail extends StatelessWidget {
   const SideCryptoDetail({super.key, required this.coin});
 

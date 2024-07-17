@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// A tab that displays the user's profile information and allows them to edit it.
 class ProfileTab extends ConsumerStatefulWidget {
   const ProfileTab({super.key});
 
