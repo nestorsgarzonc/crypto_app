@@ -4,11 +4,23 @@ import 'package:crypto_app/features/dashboard/ui/widgets/crypto_favorite_card.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FavoritesTab extends ConsumerWidget {
+class FavoritesTab extends ConsumerStatefulWidget {
   const FavoritesTab({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<FavoritesTab> createState() => _FavoritesTabState();
+}
+
+class _FavoritesTabState extends ConsumerState<FavoritesTab> {
+  @override
+  void initState() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => ref.read(dashboardProvider.notifier).fetchFavoritesCryptos());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final (coins, fav) = ref.watch(dashboardProvider.select((e) => (e.coins, e.favoriteCoinsList)));
     return Column(

@@ -20,12 +20,7 @@ class CryptoItemCard extends ConsumerWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.all(8),
         title: Text(coin.name),
-        subtitle: Text('${coin.symbol} - ${coin.id}'),
-        trailing: Text(
-          '\$${coin.currentPrice.toStringAsFixed(1)}',
-          style: theme.textTheme.labelLarge,
-        ),
-        leading: IconButton(
+        trailing: IconButton(
           icon: Icon(
             Icons.star,
             color: isFavorite ? Colors.orangeAccent : null,
@@ -34,6 +29,11 @@ class CryptoItemCard extends ConsumerWidget {
               ? ref.read(dashboardProvider.notifier).deleteFavoriteCoin(coin.id)
               : ref.read(dashboardProvider.notifier).addFavoriteCoin(coin.id),
         ),
+        subtitle: Text(
+          '\$${coin.currentPrice.toStringAsFixed(1)}',
+          style: theme.textTheme.labelLarge,
+        ),
+        leading: Image.network(coin.image, height: 36),
       ),
     );
   }

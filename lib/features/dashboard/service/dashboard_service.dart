@@ -14,6 +14,7 @@ abstract class DashboardService {
   Future<Set<String>> getFavoritesCoins();
   Future<void> addFavoriteCoin(String coinId);
   Future<void> deleteFavoriteCoin(String coinId);
+  Future<Set<String>> getListCoins();
 }
 
 class DashboardServiceImpl implements DashboardService {
@@ -38,10 +39,15 @@ class DashboardServiceImpl implements DashboardService {
       queryStr = '&ids=${query.join(',')}';
     }
     final path =
-        '/v3/coins/markets?vs_currency=usd&order=${order.labelBackEnd}&per_page=20&page=$page$queryStr';
+        '/v3/coins/markets?vs_currency=usd&order=${order.labelBackEnd}&per_page=40&page=$page$queryStr';
     final res = await apiHandler.get(path);
     _logger.info('getCoins: $res');
-    return res.responseList.map((e) => CoinsModel.fromMap(e)).toList();
+    final mapped = res.responseList.map((e) => CoinsModel.fromMap(e)).toList();
+    final isAsc = order == CoinsOrder.ascendent;
+    mapped.sort((a, b) => isAsc
+        ? a.currentPrice.compareTo(b.currentPrice)
+        : b.currentPrice.compareTo(a.currentPrice));
+    return mapped;
   }
 
   @override
@@ -72,5 +78,13 @@ class DashboardServiceImpl implements DashboardService {
     return userFavRef.update({
       'items': FieldValue.arrayRemove([coinId])
     });
+  }
+
+  @override
+  Future<Set<String>> getListCoins() async {
+    const path = '/v3/coins/list';
+    final res = await apiHandler.get(path);
+    _logger.info('getListCoints: $res');
+    return res.responseList.map((e) => e['id'] as String).toSet();
   }
 }

@@ -53,4 +53,14 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
     await service.deleteFavoriteCoin(coinId);
     await getFavoritesCoins();
   }
+
+  Future<void> getListCoins() async {
+    try {
+      state = state.copyWith(listCoins: const StateAsync.loading());
+      final data = await service.getListCoins();
+      state = state.copyWith(listCoins: StateAsync.data(data));
+    } catch (e) {
+      state = state.copyWith(listCoins: StateAsync.failure(Failure(e.toString())));
+    }
+  }
 }

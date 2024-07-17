@@ -19,17 +19,17 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   int get _selectedIndex => _idx;
   set _selectedIndex(int idx) {
     setState(() => _idx = idx);
-    if (idx == 0) ref.read(dashboardProvider.notifier).fetchCryptos();
-    if (idx == 1) ref.read(dashboardProvider.notifier).fetchFavoritesCryptos();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: const [HomeTab(), FavoritesTab(), CompareTab(), ProfileTab()],
-      ),
+      body: [
+        const HomeTab(),
+        const FavoritesTab(),
+        const CompareTab(),
+        const ProfileTab()
+      ][_selectedIndex],
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: (idx) => _selectedIndex = idx,
