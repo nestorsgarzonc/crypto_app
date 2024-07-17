@@ -45,7 +45,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   void listenAuth() {
     service.authStateChanges().listen((user) {
-      print(user);
       state = state.copyWith(userAuth: StateAsync.data(user));
     });
   }
@@ -53,6 +52,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<void> checkAuth() async {
     try {
       final user = await service.getAuth();
+      listenAuth();
       state = state.copyWith(userAuth: StateAsync.data(user));
     } catch (e) {
       state = state.copyWith(userAuth: StateAsync.failure(Failure(e.toString())));
