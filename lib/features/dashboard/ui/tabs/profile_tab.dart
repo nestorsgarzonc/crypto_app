@@ -139,6 +139,10 @@ class _ProfileTabState extends ConsumerState<ProfileTab> {
                     ? const CircularProgressIndicator.adaptive()
                     : const Text('Update'),
               ),
+              TextButton(
+                onPressed: _signOut,
+                child: const Text('Sing out'),
+              ),
             ],
           ),
         );
@@ -147,6 +151,8 @@ class _ProfileTabState extends ConsumerState<ProfileTab> {
       error: (e) => Center(child: Text('Error: $e')),
     );
   }
+
+  void _signOut() => ref.read(authProvider.notifier).signOut();
 
   Future<void> _selectDate() async {
     final picked = await showDatePicker(

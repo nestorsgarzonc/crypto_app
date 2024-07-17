@@ -21,8 +21,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final Ref ref;
   final AuthService service;
 
-  void login() {
-    service.getAuth();
+  Future<void> login(String email, String password) async {
+    try {
+      state = state.copyWith(registerState: const StateAsync.loading());
+      await service.login(email, password);
+      state = state.copyWith(registerState: const StateAsync.data(null));
+    } catch (e, s) {
+      logger.error('Error registering user', e, s);
+      state = state.copyWith(registerState: StateAsync.failure(Failure(e.toString())));
+    }
   }
 
   Future<void> register(RegisterModel register) async {
@@ -37,9 +44,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   void listenAuth() {
-    service
-        .authStateChanges()
-        .listen((user) => state = state.copyWith(userAuth: StateAsync.data(user)));
+    service.authStateChanges().listen((user) {
+      print(user);
+      state = state.copyWith(userAuth: StateAsync.data(user));
+    });
   }
 
   Future<void> checkAuth() async {
@@ -70,4 +78,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = state.copyWith(updateUser: StateAsync.failure(Failure(e.toString())));
     }
   }
+
+  void signOut() => service.signOut();
 }
