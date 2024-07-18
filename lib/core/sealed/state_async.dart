@@ -1,6 +1,7 @@
-import 'package:crypto_app/core/failure/failure.dart';
 import 'package:flutter/material.dart';
-/// Represents the different states of an asynchronous operation.
+import 'package:crypto_app/core/failure/failure.dart';
+
+// Represents the different states of an asynchronous operation.
 ///
 /// The [StateAsync] class is a sealed class that defines four possible states:
 /// - [AsyncLoadingC]: Represents the loading state of the operation.
@@ -43,6 +44,16 @@ class AsyncDone<T> implements StateAsync<T> {
 
   @override
   String toString() => 'AsyncDone<$T>($value)';
+
+  @override
+  bool operator ==(covariant AsyncDone<T> other) {
+    if (identical(this, other)) return true;
+
+    return other.value == value;
+  }
+
+  @override
+  int get hashCode => value.hashCode;
 }
 
 /// Represents the failure of an asynchronous operation with an error.
@@ -54,6 +65,16 @@ class AsyncFailure<T> implements StateAsync<T> {
 
   @override
   String toString() => 'AsyncFailure<$T>($error)';
+
+  @override
+  bool operator ==(covariant AsyncFailure<T> other) {
+    if (identical(this, other)) return true;
+
+    return other.error == error;
+  }
+
+  @override
+  int get hashCode => error.hashCode;
 }
 
 /// Extension methods for the [StateAsync] class.

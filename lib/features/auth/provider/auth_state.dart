@@ -27,8 +27,8 @@ class AuthState {
   AuthState copyWith({
     StateAsync<User?>? userAuth,
     StateAsync<UserModel>? userModel,
-    StateAsync? registerState,
-    StateAsync? updateUser,
+    StateAsync<void>? registerState,
+    StateAsync<void>? updateUser,
   }) {
     return AuthState(
       userAuth: userAuth ?? this.userAuth,

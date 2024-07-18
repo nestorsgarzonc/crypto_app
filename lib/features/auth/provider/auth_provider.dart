@@ -5,6 +5,7 @@ import 'package:crypto_app/features/auth/models/register_model.dart';
 import 'package:crypto_app/features/auth/provider/auth_state.dart';
 import 'package:crypto_app/features/auth/service/auth_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 /// Provider for managing authentication state and actions.
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>(AuthNotifier.fromRef);
 
