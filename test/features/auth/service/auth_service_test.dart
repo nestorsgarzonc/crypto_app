@@ -1,6 +1,7 @@
 import 'package:crypto_app/core/failure/failure.dart';
 import 'package:crypto_app/features/auth/models/register_model.dart';
-import 'package:crypto_app/features/auth/service/auth_service.dart';
+
+import 'package:crypto_app/features/auth/service/auth_service_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

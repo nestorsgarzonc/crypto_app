@@ -58,6 +58,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                key: const Key('emailField'),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: TextValidators.email,
                 controller: _emailController,
@@ -69,6 +70,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                key: const Key('passwordField'),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: TextValidators.password,
                 controller: _passwordController,
@@ -80,6 +82,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               const SizedBox(height: 16),
               ElevatedButton.icon(
+                key: const Key('loginButton'),
                 onPressed: _onLogin,
                 label: const Text('Login'),
                 icon: const Icon(Icons.login),
