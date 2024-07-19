@@ -46,10 +46,9 @@ class AsyncDone<T> implements StateAsync<T> {
   String toString() => 'AsyncDone<$T>($value)';
 
   @override
-  bool operator ==(covariant AsyncDone<T> other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
-    return other.value == value;
+    return other == value;
   }
 
   @override
